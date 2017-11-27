@@ -12,20 +12,19 @@ class GrabList:
     """
     __EXT = '.txt'  # Grab list file extension
 
-    def __init__(self, list_path):
+    def __init__(self, __target_path):
         """
         Initialize Grab list
-        @param list_path:
+        @param __target_path: Target path
+        @type __target_path: str
         """
-        self.__path = list_path
+        self.__path = __target_path
 
     @staticmethod
     def __open(*args, **kwargs):
         """
         Handles native file opener.
-        @param args: Arguments
-        @param kwargs: Named Arguments
-        @return: Returns None on failure
+        @return: open | None - Returns None on failure
         """
         try:
             return open(*args, **kwargs)
@@ -33,9 +32,15 @@ class GrabList:
             return None
 
     @staticmethod
-    def make_path(path):
+    def make_path(__path):
+        """
+        Makes path
+        @param __path: Path to create
+        @type __path: str
+        @return: bool
+        """
         try:
-            _os.makedirs(path)
+            _os.makedirs(__path)
             return True
         except Exception:
             return False
@@ -44,7 +49,7 @@ class GrabList:
     def path(self):
         """
         Get path
-        @return: Returns None if grab list path not exist
+        @return: None | str - Returns None if grab list path not exist
         """
         if _os.path.isdir(self.__path) is False:
             return None
@@ -54,7 +59,7 @@ class GrabList:
     def path_files(self):
         """
         Get path files
-        @return: Returns None if no path or no path files
+        @return: None | list - Returns None if no path or no path files
         """
         if self.path is None:
             return None
@@ -69,17 +74,18 @@ class GrabList:
             return None
         return grab_lists
 
-    def list(self, file_name=None):
+    def list(self, __file_name=None):
         """
         Returns a grab list
-        @param file_name: Optional parameter to pick selected list (default: None)
-        @return: Returns all list in given path if no selected file
+        @param __file_name: Optional parameter to pick selected list (default: None)
+        @type __file_name: None | str
+        @return: None | list - Returns all list in given path if no selected file
         """
         if self.path_files is None:
             return None
-        if file_name is not None and file_name in self.path_files:
-            return self.__get_list(file_name)
-        elif file_name is None:
+        if __file_name is not None and __file_name in self.path_files:
+            return self.__get_list(__file_name)
+        elif __file_name is None:
             data_list = []
             for __file in self.path_files:
                 data_list += self.__get_list(__file)
@@ -87,13 +93,14 @@ class GrabList:
         else:
             return []
 
-    def __get_list(self, file_name):
+    def __get_list(self, __file_name):
         """
         Parses a valid list as possible
-        @param file_name: List file name
-        @return: Returns lines in list
+        @param __file_name: List file name
+        @type __file_name: str
+        @return: list - Returns lines in list
         """
-        absolute_path = '{}{}{}'.format(self.path, _os.sep, file_name)
+        absolute_path = '{}{}{}'.format(self.path, _os.sep, __file_name)
         try:
             __file = GrabList.__open(absolute_path, 'r')
             data_list = []
