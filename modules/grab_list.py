@@ -59,12 +59,12 @@ class GrabList:
         if self.path is None:
             return None
         ext_len = len(GrabList.__EXT)
-        files = _os.listdir(self.path)
+        __files = _os.listdir(self.path)
         grab_lists = []
-        for file in files:
-            if file[-ext_len::] != GrabList.__EXT:
+        for __file in __files:
+            if __file[-ext_len::] != GrabList.__EXT:
                 continue
-            grab_lists.append(file)
+            grab_lists.append(__file)
         if not grab_lists:
             return None
         return grab_lists
@@ -81,8 +81,8 @@ class GrabList:
             return self.__get_list(file_name)
         elif file_name is None:
             data_list = []
-            for file in self.path_files:
-                data_list += self.__get_list(file)
+            for __file in self.path_files:
+                data_list += self.__get_list(__file)
             return data_list
         else:
             return []
@@ -95,14 +95,14 @@ class GrabList:
         """
         absolute_path = '{}{}{}'.format(self.path, _os.sep, file_name)
         try:
-            file = GrabList.__open(absolute_path, 'r')
+            __file = GrabList.__open(absolute_path, 'r')
             data_list = []
-            for data in file.readlines():
+            for data in __file.readlines():
                 data = data.strip()
                 if not data:  # prevents blank lines
                     continue
                 data_list.append(data)
-            file.close()
+            __file.close()
             return data_list
         except Exception:
             return []
