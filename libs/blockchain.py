@@ -149,7 +149,7 @@ class Blockchain:
         try:
             if cls.__typeof(params, dict) is True:
                 url += '?{}'.format(_urlencode(params))
-                print(url)
+                # print(url)
             return True, _req.get(url)
         except _RequestException as err:
             return False, err

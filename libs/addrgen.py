@@ -144,7 +144,10 @@ def base58_check_decode(s, version=0):
 def gen_eckey(passphrase=None, secret=None, pkey=None, compressed=False, rounds=1, version=0):
     k = KEY()
     if passphrase:
-        secret = passphrase.encode('utf8')
+        try:
+            secret = passphrase.encode('utf8')
+        except Exception:
+            secret = ''
         for i in xrange(rounds):
             secret = hashlib.sha256(secret).digest()
     if pkey:
