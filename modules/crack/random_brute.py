@@ -42,10 +42,11 @@ class RandomBrute:
             pool.submit(self.__run_brute)
 
     def __run_brute(self):
-        public, private = cls.__random_address()
         config = self.__config
-        if public in config['target_list']:
-            self.__log(public, private)
+        while True:
+            public, private = cls.__random_address()
+            if public in config['target_list']:
+                self.__log(public, private)
 
     def __log(self, public, private):
         if self.__config['beep'] is True:
