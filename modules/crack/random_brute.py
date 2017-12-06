@@ -37,7 +37,7 @@ class RandomBrute:
     def __run_pool(self):
         config = self.__config
         workers = config['workers']
-        pool = ThreadPoolExecutor(max_workers=(workers + 1))
+        pool = ThreadPoolExecutor(max_workers=workers)
         for _ in range(workers):
             pool.submit(self.__run_brute)
 
@@ -46,6 +46,7 @@ class RandomBrute:
         while True:
             public, private = cls.__random_address()
             if public in config['target_list']:
+                print(public, private)
                 self.__log(public, private)
 
     def __log(self, public, private):
