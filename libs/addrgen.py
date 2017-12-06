@@ -195,12 +195,21 @@ def test(otherversion):
     # reencode(sys.argv[1])
 
 
-if __name__ == '__main__':
+def get_version():
     import optparse
 
     parser = optparse.OptionParser(usage="%prog [options]")
     parser.add_option("--otherversion", dest="otherversion", default=0,
                       help="Generate address with different version number")
-    (options, args) = parser.parse_args()
+    options, args = parser.parse_args()
+    return options.otherversion
 
-    test(int(options.otherversion))
+
+if __name__ == '__main__':
+    # import optparse
+    #
+    # parser = optparse.OptionParser(usage="%prog [options]")
+    # parser.add_option("--otherversion", dest="otherversion", default=0,
+    #                   help="Generate address with different version number")
+    # (options, args) = parser.parse_args()
+    test(int(get_version()))
